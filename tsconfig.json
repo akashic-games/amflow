@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "noLib": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": false,
+    "outDir": "./lib"
+  },
+  "files": [
+    "./typings/index.d.ts",
+    "./node_modules/typescript/lib/lib.es6.d.ts",
+    "./src/AMFlow.ts",
+    "./src/StartPoint.ts",
+    "./src/Error.ts",
+    "./src/index.ts"
+  ]
+}

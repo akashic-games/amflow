@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "noLib": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "declaration": false,
+    "removeComments": false,
+    "outDir": "./build"
+  },
+  "files": [
+    "../typings/index.d.ts",
+    "../node_modules/typescript/lib/lib.es6.d.ts",
+    "./amflow-mock-client.ts"
+  ]
+}
