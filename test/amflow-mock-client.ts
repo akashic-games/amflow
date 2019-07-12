@@ -17,7 +17,7 @@ function createAMFlowError(name: string, message: string): AMFlow.AMFlowError {
 }
 
 class MockSocket {
-	connect(url: string, callback?: (error?: Error) => void) {
+	connect(url: string, callback?: (error?: Error) => void): void {
 		if (callback) {
 			callback();
 		}
@@ -26,8 +26,9 @@ class MockSocket {
 		if (callback) {
 			callback();
 		}
-	};
+	}
 	send(message: Buffer): void {
+		// NOP
 	}
 }
 
@@ -36,8 +37,8 @@ class MockClient implements AMFlow.AMFlow {
 	private url: string;
 	private socket: MockSocket;
 
-	private onTickHandlers: ((tick: playlog.Tick) => void)[]
-	private onEventHandlers: ((event: playlog.Event) => void)[]
+	private onTickHandlers: ((tick: playlog.Tick) => void)[];
+	private onEventHandlers: ((event: playlog.Event) => void)[];
 
 	constructor(url: string) {
 		this.status = Status.closed;
@@ -59,7 +60,7 @@ class MockClient implements AMFlow.AMFlow {
 		}
 		this.status = Status.closed;
 	}
-	authenticate(token: string, callback: (error: Error, permission: AMFlow.Permission) => void): void {
+	authenticate(token: string, callback: (error: Error | null, permission?: AMFlow.Permission) => void): void {
 		callback(null, {
 			writeTick: true,
 			readTick: true,
@@ -68,6 +69,7 @@ class MockClient implements AMFlow.AMFlow {
 			subscribeEvent: true,
 			maxEventPriority: 1
 		});
+		callback(new Error("error"));
 	}
 	sendTick(tick: playlog.Tick): void {
 		if (this.status !== Status.open) {
@@ -105,19 +107,19 @@ class MockClient implements AMFlow.AMFlow {
 		});
 		this.onEventHandlers = handlers;
 	}
-	getTickList(begin: number, end: number, callback: (error: Error, tickList: playlog.TickList) => void): void {
+	getTickList(begin: number, end: number, callback: (error: Error | null, tickList?: playlog.TickList) => void): void {
 		throw createAMFlowError("NotImplemented", "MockClient#getTickList is not implemented.");
 	}
-	putStartPoint(startPoint: AMFlow.StartPoint, callback: (error: Error) => void): void {
+	putStartPoint(startPoint: AMFlow.StartPoint, callback: (error?: Error) => void): void {
 		throw createAMFlowError("NotImplemented", "MockClient#putStartPoint is not implemented.");
 	}
-	getStartPoint(opts: AMFlow.GetStartPointOptions, callback: (error: Error, startPoint: AMFlow.StartPoint) => void): void {
+	getStartPoint(opts: AMFlow.GetStartPointOptions, callback: (error: Error | null, startPoint?: AMFlow.StartPoint) => void): void {
 		throw createAMFlowError("NotImplemented", "MockClient#getStartPoint is not implemented.");
 	}
-	putStorageData(key: playlog.StorageKey, value: playlog.StorageValue, options: any, callback: (err: Error) => void): void {
+	putStorageData(key: playlog.StorageKey, value: playlog.StorageValue, options: any, callback: (err?: Error) => void): void {
 		throw createAMFlowError("NotImplemented", "MockClient#putStorageData is not implemented.");
 	}
-	getStorageData(keys: playlog.StorageReadKey[], callback: (error: Error, values: playlog.StorageData[]) => void): void {
+	getStorageData(keys: playlog.StorageReadKey[], callback: (error: Error | null, values?: playlog.StorageData[]) => void): void {
 		throw createAMFlowError("NotImplemented", "MockClient#getStorageData is not implemented.");
 	}
 	private encodeTick(tick: playlog.Tick): Buffer {
@@ -134,3 +136,41 @@ class MockClient implements AMFlow.AMFlow {
 	}
 
 }
+
+// callback args null/省略 check
+const client = new MockClient("http://debug/url.arg");
+client.getTickList = (begin: number, end: number, callback: (error: Error | null, tickList?: playlog.TickList) => void): void => {
+	callback(null, [0, 1]);
+	callback(null);
+	callback(new Error("error"), undefined);
+};
+
+client.putStartPoint = (startPoint: AMFlow.StartPoint, callback: (error?: Error) => void): void => {
+	callback(new Error("error"));
+	callback();
+};
+
+client.getStartPoint = (
+	opts: AMFlow.GetStartPointOptions,
+	callback: (error: Error | null, startPoint?: AMFlow.StartPoint) => void
+): void => {
+	const startPoint = { frame: 1, timestamp: 2, data: null };
+	callback(new Error("error"));
+	callback(null);
+	callback(null, startPoint);
+};
+
+client.putStorageData = (key: playlog.StorageKey, value: playlog.StorageValue, options: any, callback: (err?: Error) => void): void => {
+	callback(new Error("error"));
+	callback();
+};
+
+client.getStorageData = (keys: playlog.StorageReadKey[], callback: (error: Error | null, values?: playlog.StorageData[]) => void): void => {
+	callback(new Error("error"));
+	callback(null);
+	const data: playlog.StorageData = {
+		readKey: { region: 1, regionKey: "rKey" },
+		values: [{ data: 12345 }]
+	};
+	callback(null, [data]);
+};

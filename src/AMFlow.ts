@@ -36,7 +36,7 @@ export interface AMFlow {
 	/**
 	 * セッションの認証を要求する。
 	 */
-	authenticate(token: string, callback: (error: Error, permission: Permission) => void): void;
+	authenticate(token: string, callback: (error: Error | null, permission?: Permission) => void): void;
 
 	// カテゴリ: リアルタイム
 	/**
@@ -73,28 +73,28 @@ export interface AMFlow {
 	/**
 	 * 保存された `playlog.Tick` のリスト `[begin, end)` を `playlog.TickList` の形式で取得する。
 	 */
-	getTickList(begin: number, end: number, callback: (error: Error, tickList: playlog.TickList) => void): void;
+	getTickList(begin: number, end: number, callback: (error: Error | null, tickList?: playlog.TickList) => void): void;
 
 	/**
 	 * 開始地点情報を保存する。
 	 */
-	putStartPoint(startPoint: StartPoint, callback: (error: Error) => void): void;
+	putStartPoint(startPoint: StartPoint, callback: (error?: Error) => void): void;
 
 	/**
 	 * 保存された開始地点情報を取得する。
 	 * オプションとしてフレーム番号もタイムスタンプも指定しない場合は、0フレーム目の開始地点情報を取得する。
 	 * オプションを指定した場合は、条件を満たすの直近の開始地点情報を取得する。
 	 */
-	getStartPoint(opts: GetStartPointOptions, callback: (error: Error, startPoint: StartPoint) => void): void;
+	getStartPoint(opts: GetStartPointOptions, callback: (error: Error | null, startPoint?: StartPoint) => void): void;
 
 	// カテゴリ: ストレージ
 	/**
 	 * ストレージデータを保存する。
 	 */
-	putStorageData(key: playlog.StorageKey, value: playlog.StorageValue, options: any, callback: (err: Error) => void): void;
+	putStorageData(key: playlog.StorageKey, value: playlog.StorageValue, options: any, callback: (err?: Error) => void): void;
 
 	/**
 	 * ストレージデータを取得する。
 	 */
-	getStorageData(keys: playlog.StorageReadKey[], callback: (error: Error, values: playlog.StorageData[]) => void): void;
+	getStorageData(keys: playlog.StorageReadKey[], callback: (error: Error | null, values?: playlog.StorageData[]) => void): void;
 }
