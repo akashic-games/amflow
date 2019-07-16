@@ -141,8 +141,7 @@ class MockClient implements AMFlow.AMFlow {
 const client = new MockClient("http://debug/url.arg");
 client.getTickList = (begin: number, end: number, callback: (error: Error | null, tickList?: playlog.TickList) => void): void => {
 	callback(null, [0, 1]);
-	callback(null);
-	callback(new Error("error"), undefined);
+	callback(new Error("error"));
 };
 
 client.putStartPoint = (startPoint: AMFlow.StartPoint, callback: (error?: Error) => void): void => {
@@ -156,7 +155,6 @@ client.getStartPoint = (
 ): void => {
 	const startPoint = { frame: 1, timestamp: 2, data: null };
 	callback(new Error("error"));
-	callback(null);
 	callback(null, startPoint);
 };
 
@@ -167,7 +165,6 @@ client.putStorageData = (key: playlog.StorageKey, value: playlog.StorageValue, o
 
 client.getStorageData = (keys: playlog.StorageReadKey[], callback: (error: Error | null, values?: playlog.StorageData[]) => void): void => {
 	callback(new Error("error"));
-	callback(null);
 	const data: playlog.StorageData = {
 		readKey: { region: 1, regionKey: "rKey" },
 		values: [{ data: 12345 }]
