@@ -17,14 +17,14 @@ function createAMFlowError(name: string, message: string): AMFlow.AMFlowError {
 }
 
 class MockSocket {
-	connect(url: string, callback?: (error?: Error) => void): void {
+	connect(url: string, callback?: (error: Error | null) => void): void {
 		if (callback) {
-			callback();
+			callback(null);
 		}
 	}
-	close(callback?: (error?: Error) => void): void {
+	close(callback?: (error: Error | null) => void): void {
 		if (callback) {
-			callback();
+			callback(null);
 		}
 	}
 	send(message: Buffer): void {
@@ -48,13 +48,13 @@ class MockClient implements AMFlow.AMFlow {
 		this.onTickHandlers = [];
 		this.onEventHandlers = [];
 	}
-	open(playId: string, callback?: (error?: Error) => void): void {
+	open(playId: string, callback?: (error: Error | null) => void): void {
 		if (this.status !== Status.closed) {
 			throw createAMFlowError("InvalidStatus", "not closed");
 		}
 		this.socket.connect(this.url, callback);
 	}
-	close(callback?: (error?: Error) => void): void {
+	close(callback?: (error: Error | null) => void): void {
 		if (this.status === Status.open) {
 			this.socket.close(callback);
 		}
@@ -110,13 +110,13 @@ class MockClient implements AMFlow.AMFlow {
 	getTickList(begin: number, end: number, callback: (error: Error | null, tickList?: playlog.TickList) => void): void {
 		throw createAMFlowError("NotImplemented", "MockClient#getTickList is not implemented.");
 	}
-	putStartPoint(startPoint: AMFlow.StartPoint, callback: (error?: Error) => void): void {
+	putStartPoint(startPoint: AMFlow.StartPoint, callback: (error: Error | null) => void): void {
 		throw createAMFlowError("NotImplemented", "MockClient#putStartPoint is not implemented.");
 	}
 	getStartPoint(opts: AMFlow.GetStartPointOptions, callback: (error: Error | null, startPoint?: AMFlow.StartPoint) => void): void {
 		throw createAMFlowError("NotImplemented", "MockClient#getStartPoint is not implemented.");
 	}
-	putStorageData(key: playlog.StorageKey, value: playlog.StorageValue, options: any, callback: (err?: Error) => void): void {
+	putStorageData(key: playlog.StorageKey, value: playlog.StorageValue, options: any, callback: (err: Error | null) => void): void {
 		throw createAMFlowError("NotImplemented", "MockClient#putStorageData is not implemented.");
 	}
 	getStorageData(keys: playlog.StorageReadKey[], callback: (error: Error | null, values?: playlog.StorageData[]) => void): void {
@@ -144,9 +144,9 @@ client.getTickList = (begin: number, end: number, callback: (error: Error | null
 	callback(new Error("error"));
 };
 
-client.putStartPoint = (startPoint: AMFlow.StartPoint, callback: (error?: Error) => void): void => {
+client.putStartPoint = (startPoint: AMFlow.StartPoint, callback: (error: Error | null) => void): void => {
 	callback(new Error("error"));
-	callback();
+	callback(null);
 };
 
 client.getStartPoint = (
@@ -158,9 +158,9 @@ client.getStartPoint = (
 	callback(null, startPoint);
 };
 
-client.putStorageData = (key: playlog.StorageKey, value: playlog.StorageValue, options: any, callback: (err?: Error) => void): void => {
+client.putStorageData = (key: playlog.StorageKey, value: playlog.StorageValue, options: any, callback: (err: Error|null) => void): void => {
 	callback(new Error("error"));
-	callback();
+	callback(null);
 };
 
 client.getStorageData = (keys: playlog.StorageReadKey[], callback: (error: Error | null, values?: playlog.StorageData[]) => void): void => {

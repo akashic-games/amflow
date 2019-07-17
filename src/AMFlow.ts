@@ -26,12 +26,12 @@ export interface AMFlow {
 	/**
 	 * AMFlowのセッションを開始する。
 	 */
-	open(playId: string, callback?: (error?: Error) => void): void;
+	open(playId: string, callback?: (error: Error | null) => void): void;
 
 	/**
 	 * 開始済みのAMFlowのセッションを終了する。
 	 */
-	close(callback?: (error?: Error) => void): void;
+	close(callback?: (error: Error | null) => void): void;
 
 	/**
 	 * セッションの認証を要求する。
@@ -78,7 +78,7 @@ export interface AMFlow {
 	/**
 	 * 開始地点情報を保存する。
 	 */
-	putStartPoint(startPoint: StartPoint, callback: (error?: Error) => void): void;
+	putStartPoint(startPoint: StartPoint, callback: (error: Error | null) => void): void;
 
 	/**
 	 * 保存された開始地点情報を取得する。
@@ -91,7 +91,7 @@ export interface AMFlow {
 	/**
 	 * ストレージデータを保存する。
 	 */
-	putStorageData(key: playlog.StorageKey, value: playlog.StorageValue, options: any, callback: (err?: Error) => void): void;
+	putStorageData(key: playlog.StorageKey, value: playlog.StorageValue, options: any, callback: (err: Error | null) => void): void;
 
 	/**
 	 * ストレージデータを取得する。
