@@ -72,6 +72,7 @@ export interface AMFlow {
 	// カテゴリ: キャッシュされたデータ
 	/**
 	 * 保存された `playlog.Tick` のリスト `[begin, end)` を `playlog.TickList` の形式で取得する。
+	 * `playlog.Tick` に含まれる `playlog.Event` の非永続化フラグが真の場合、そのイベントは `playlog.TickList` から除外される。
 	 */
 	getTickList(begin: number, end: number, callback: (error: Error | null, tickList?: playlog.TickList) => void): void;
 
