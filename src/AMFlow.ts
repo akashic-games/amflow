@@ -41,6 +41,7 @@ export interface AMFlow {
 	// カテゴリ: リアルタイム
 	/**
 	 * `playlog.Tick` を送信する。
+	 * `playlog.Tick` に含まれる `playlog.Event` の非永続化フラグが真の場合、そのイベントは `getTickList()` から除外される。
 	 */
 	sendTick(tick: playlog.Tick): void;
 

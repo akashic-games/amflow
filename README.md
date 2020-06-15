@@ -95,6 +95,8 @@ AMFlow実装は、この `Permission` を元にその他のメソッドの動作
 sendTick(tick: playlog.Tick): void;
 ```
 
+`playlog.Tick` に含まれる `playlog.Event` の非永続化フラグが真の場合、そのイベントは `getTickList()` から除外されます。
+
 ### onTick
 
 `playlog.Tick` の受信ハンドラを登録します。
