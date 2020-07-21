@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.0.0
+* playlog@3.1.0 に対応
+* AMFlow#getTickList() の引数を変更
+
 ## 2.0.0
 * playlog@3.0.0 に対応
 

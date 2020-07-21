@@ -50,7 +50,7 @@ AMFlow実装は、このメソッド呼び出し時、または呼び出し前�
 * authenticate
 * sendTick
 * sendEvent
-* getTicks
+* getTickList
 * putStartPoint
 * getStartPoint
 
@@ -95,7 +95,7 @@ AMFlow実装は、この `Permission` を元にその他のメソッドの動作
 sendTick(tick: playlog.Tick): void;
 ```
 
-`playlog.Tick` に含まれる `playlog.Event` の非永続化フラグが真の場合、そのイベントは `getTickList()` から除外されます。
+`playlog.Tick` に含まれる `playlog.Event` の非永続化フラグ (`playlog.EventFlags.Transient`) が真の場合、そのイベントは `getTickList()` から除外されます。
 
 ### onTick
 
@@ -146,10 +146,12 @@ offEvent(handler: (event: playlog.Event) => void): void;
 保存された `playlog.Tick` のリストを `playlog.TickList` の形式で取得します。このメソッドの呼び出しにはセッションの開始が必須です。
 
 ```
-getTickList(begin: number, end: number, callback: (error: Error, tickList: playlog.TickList) => void): void;
+getTickList(opts: GetTickListOptions, callback: (error: Error, tickList: playlog.TickList) => void): void;
 ```
 
-`begin` で指定されたフレーム番号を含むフレームから、`end` で指定されたフレーム番号を含まないフレームのリストとなります。
+`opts.begin` で指定されたフレーム番号を含むフレームから、`opts.end` で指定されたフレーム番号を含まないフレームのリストとなります。
+
+`opts.excludeEventFlags` で `playlog.TickList` に含まれる `playlog.Event` の除外条件を指定することができます。
 
 指定された範囲の `playlog.Tick` が一つも見つからない場合、`tickList` は `null` となります。
 
