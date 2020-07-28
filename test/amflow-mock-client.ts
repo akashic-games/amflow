@@ -107,7 +107,11 @@ class MockClient implements AMFlow.AMFlow {
 		});
 		this.onEventHandlers = handlers;
 	}
-	getTickList(begin: number, end: number, callback: (error: Error | null, tickList?: playlog.TickList) => void): void {
+	getTickList(
+		optsOrBegin: number | AMFlow.GetTickListOptions,
+		endOrCallback: number | ((error: Error | null, tickList?: playlog.TickList) => void),
+		callback?: (error: Error | null, tickList?: playlog.TickList) => void
+	): void {
 		throw createAMFlowError("NotImplemented", "MockClient#getTickList is not implemented.");
 	}
 	putStartPoint(startPoint: AMFlow.StartPoint, callback: (error: Error | null) => void): void {
