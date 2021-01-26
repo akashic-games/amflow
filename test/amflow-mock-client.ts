@@ -2,8 +2,8 @@
  * ビルドテスト
  */
 
-import * as AMFlow from "../lib";
 import * as playlog from "@akashic/playlog";
+import * as AMFlow from "../lib";
 
 enum Status {
 	open,
@@ -11,7 +11,7 @@ enum Status {
 }
 
 function createAMFlowError(name: string, message: string): AMFlow.AMFlowError {
-	var error = <AMFlow.AMFlowError>new Error(message);
+	var error = <AMFlow.AMFlowError> new Error(message);
 	error.name = name;
 	return error;
 }
