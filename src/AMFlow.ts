@@ -29,13 +29,15 @@ export interface GetTickListOptions {
 	 * この値が指定された場合、対象の `playlog.Event` を除外した `playlog.TickList` を返す。
 	 * 省略時は除外しない (すべての `playlog.Event` を `playlog.TickList` に含ませる)。
 	 */
-	excludeEventFlags?: {
-		/**
-		 * `playlog.EventFlags.Ignorable` フラグが有効の `playlog.Event` を除外するかどうか。真の場合は除外する。
-		 * 省略時は除外しない。
-		 */
-		ignorable?: boolean;
-	};
+	excludeEventFlags?: GetTickListExcludeEventFlags;
+}
+
+export interface GetTickListExcludeEventFlags {
+	/**
+	 * `playlog.EventFlags.Ignorable` フラグが有効の `playlog.Event` を除外するかどうか。真の場合は除外する。
+	 * 省略時は除外しない。
+	 */
+	ignorable?: boolean;
 }
 
 export interface AMFlow {
