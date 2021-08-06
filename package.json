@@ -1,6 +1,6 @@
 {
   "name": "@akashic/amflow",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "The interface definition of AMFlow, a playlog communication interface",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -9,7 +9,7 @@
     "README.md"
   ],
   "scripts": {
-    "prepublish": "npm run clean && npm run build",
+    "prepare": "npm run clean && npm run build",
     "clean": "rimraf ./lib && rimraf ./test/build",
     "build": "tsc -p ./",
     "test": "cd ./test && tsc -p ./",
