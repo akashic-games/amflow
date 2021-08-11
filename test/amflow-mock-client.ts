@@ -2,8 +2,8 @@
  * ビルドテスト
  */
 
-import * as AMFlow from "../lib";
 import * as playlog from "@akashic/playlog";
+import * as AMFlow from "../lib";
 
 enum Status {
 	open,
@@ -11,13 +11,13 @@ enum Status {
 }
 
 function createAMFlowError(name: string, message: string): AMFlow.AMFlowError {
-	var error = <AMFlow.AMFlowError>new Error(message);
+	var error = <AMFlow.AMFlowError> new Error(message);
 	error.name = name;
 	return error;
 }
 
 class MockSocket {
-	connect(url: string, callback?: (error: Error | null) => void): void {
+	connect(_url: string, callback?: (error: Error | null) => void): void {
 		if (callback) {
 			callback(null);
 		}
@@ -27,7 +27,7 @@ class MockSocket {
 			callback(null);
 		}
 	}
-	send(message: Buffer): void {
+	send(_message: Buffer): void {
 		// NOP
 	}
 }
@@ -48,7 +48,7 @@ class MockClient implements AMFlow.AMFlow {
 		this.onTickHandlers = [];
 		this.onEventHandlers = [];
 	}
-	open(playId: string, callback?: (error: Error | null) => void): void {
+	open(_playId: string, callback?: (error: Error | null) => void): void {
 		if (this.status !== Status.closed) {
 			throw createAMFlowError("InvalidStatus", "not closed");
 		}
@@ -60,7 +60,7 @@ class MockClient implements AMFlow.AMFlow {
 		}
 		this.status = Status.closed;
 	}
-	authenticate(token: string, callback: (error: Error | null, permission?: AMFlow.Permission) => void): void {
+	authenticate(_token: string, callback: (error: Error | null, permission?: AMFlow.Permission) => void): void {
 		callback(null, {
 			writeTick: true,
 			readTick: true,
@@ -108,34 +108,34 @@ class MockClient implements AMFlow.AMFlow {
 		this.onEventHandlers = handlers;
 	}
 	getTickList(
-		optsOrBegin: number | AMFlow.GetTickListOptions,
-		endOrCallback: number | ((error: Error | null, tickList?: playlog.TickList) => void),
-		callback?: (error: Error | null, tickList?: playlog.TickList) => void
+		_optsOrBegin: number | AMFlow.GetTickListOptions,
+		_endOrCallback: number | ((error: Error | null, tickList?: playlog.TickList) => void),
+		_callback?: (error: Error | null, tickList?: playlog.TickList) => void
 	): void {
 		throw createAMFlowError("NotImplemented", "MockClient#getTickList is not implemented.");
 	}
-	putStartPoint(startPoint: AMFlow.StartPoint, callback: (error: Error | null) => void): void {
+	putStartPoint(_startPoint: AMFlow.StartPoint, _callback: (error: Error | null) => void): void {
 		throw createAMFlowError("NotImplemented", "MockClient#putStartPoint is not implemented.");
 	}
-	getStartPoint(opts: AMFlow.GetStartPointOptions, callback: (error: Error | null, startPoint?: AMFlow.StartPoint) => void): void {
+	getStartPoint(_opts: AMFlow.GetStartPointOptions, _callback: (error: Error | null, startPoint?: AMFlow.StartPoint) => void): void {
 		throw createAMFlowError("NotImplemented", "MockClient#getStartPoint is not implemented.");
 	}
-	putStorageData(key: playlog.StorageKey, value: playlog.StorageValue, options: any, callback: (err: Error | null) => void): void {
+	putStorageData(_key: playlog.StorageKey, _value: playlog.StorageValue, _options: any, _callback: (err: Error | null) => void): void {
 		throw createAMFlowError("NotImplemented", "MockClient#putStorageData is not implemented.");
 	}
-	getStorageData(keys: playlog.StorageReadKey[], callback: (error: Error | null, values?: playlog.StorageData[]) => void): void {
+	getStorageData(_keys: playlog.StorageReadKey[], _callback: (error: Error | null, values?: playlog.StorageData[]) => void): void {
 		throw createAMFlowError("NotImplemented", "MockClient#getStorageData is not implemented.");
 	}
-	private encodeTick(tick: playlog.Tick): Buffer {
+	private encodeTick(_tick: playlog.Tick): Buffer {
 		return new Buffer("dummy");
 	}
-	private encodeEvent(event: playlog.Event): Buffer {
+	private encodeEvent(_event: playlog.Event): Buffer {
 		return new Buffer("dummy");
 	}
-	private decodeTick(tick: Buffer): playlog.Tick {
+	private decodeTick(_tick: Buffer): playlog.Tick {
 		return [1];
 	}
-	private decodeEvent(event: Buffer): playlog.Event {
+	private decodeEvent(_event: Buffer): playlog.Event {
 		return [1, 3, "100"];
 	}
 
@@ -143,18 +143,18 @@ class MockClient implements AMFlow.AMFlow {
 
 // callback args null/省略 check
 const client = new MockClient("http://debug/url.arg");
-client.getTickList = (begin: number, end: number, callback: (error: Error | null, tickList?: playlog.TickList) => void): void => {
+client.getTickList = (_begin: number, _end: number, callback: (error: Error | null, tickList?: playlog.TickList) => void): void => {
 	callback(null, [0, 1]);
 	callback(new Error("error"));
 };
 
-client.putStartPoint = (startPoint: AMFlow.StartPoint, callback: (error: Error | null) => void): void => {
+client.putStartPoint = (_startPoint: AMFlow.StartPoint, callback: (error: Error | null) => void): void => {
 	callback(new Error("error"));
 	callback(null);
 };
 
 client.getStartPoint = (
-	opts: AMFlow.GetStartPointOptions,
+	_opts: AMFlow.GetStartPointOptions,
 	callback: (error: Error | null, startPoint?: AMFlow.StartPoint) => void
 ): void => {
 	const startPoint = { frame: 1, timestamp: 2, data: null };
@@ -162,12 +162,20 @@ client.getStartPoint = (
 	callback(null, startPoint);
 };
 
-client.putStorageData = (key: playlog.StorageKey, value: playlog.StorageValue, options: any, callback: (err: Error|null) => void): void => {
+client.putStorageData =(
+	_key: playlog.StorageKey,
+	_value: playlog.StorageValue,
+	_options: any,
+	callback: (err: Error|null) => void
+): void => {
 	callback(new Error("error"));
 	callback(null);
 };
 
-client.getStorageData = (keys: playlog.StorageReadKey[], callback: (error: Error | null, values?: playlog.StorageData[]) => void): void => {
+client.getStorageData = (
+	_keys: playlog.StorageReadKey[],
+	callback: (error: Error | null, values?: playlog.StorageData[]) => void
+): void => {
 	callback(new Error("error"));
 	const data: playlog.StorageData = {
 		readKey: { region: 1, regionKey: "rKey" },
