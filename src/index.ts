@@ -10,3 +10,4 @@ export import StartPoint = StartPoint.StartPoint;
 export import Permission = Permission.Permission;
 
 export import AMFlowError = Error.AMFlowError;
+export { promisifyAMFlow, PromisifiedAMFlow } from "./auxiliary/PromisifyAMFlow";
