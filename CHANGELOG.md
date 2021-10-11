@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## 3.1.1
-* AMFlow の非同期関数を Promise でラップしたクラスを返す `promisifyAMFlow()` とインターフェイス `PromisifiedAMFlow` を追加
+* AMFlow の非同期関数を Promise でラップしたクラス `PromisifiedAMFlowProxy` とインターフェイス `PromisifiedAMFlow` を追加
 
 ## 3.1.0
 * `GetTickListExcludeEventFlags` を export

@@ -1,10 +1,10 @@
-import { promisifyAMFlow, PromisifiedAMFlow } from "../src/auxiliary/PromisifyAMFlow";
+import { PromisifiedAMFlowProxy } from "../src/auxiliary/PromisifiedAMFlowProxy";
 import { MockAmflow} from "./helpers/src/MockAMFlow";
 import * as pl from "@akashic/playlog";
 
 describe("PromisifyAMFlow", () => {
 	it("promisifyAMFlow", () => {
-		const promisifiedAMFlow = promisifyAMFlow(new MockAmflow());
+		const promisifiedAMFlow = new PromisifiedAMFlowProxy(new MockAmflow());
 
 		expect(promisifiedAMFlow.open).toBeDefined();
 		expect(promisifiedAMFlow.close).toBeDefined();
@@ -23,7 +23,7 @@ describe("PromisifyAMFlow", () => {
 	});
 
 	it("Function open ", async () => {
-		const promisifiedAMFlow = promisifyAMFlow(new MockAmflow());
+		const promisifiedAMFlow = new PromisifiedAMFlowProxy((new MockAmflow()));
 		let cnt = 0;
 		const calledFunc = (): void => void cnt++;
 
@@ -40,7 +40,7 @@ describe("PromisifyAMFlow", () => {
 	});
 
 	it("Function close ", async () => {
-		const promisifiedAMFlow = promisifyAMFlow(new MockAmflow());
+		const promisifiedAMFlow = new PromisifiedAMFlowProxy((new MockAmflow()));
 
 		let errMsg = "";
 		await promisifiedAMFlow.close() // モックで必ずエラーとなるようになっている
@@ -49,7 +49,7 @@ describe("PromisifyAMFlow", () => {
 	});
 
 	it("Function authenticate ", async () => {
-		const promisifiedAMFlow = promisifyAMFlow(new MockAmflow());
+		const promisifiedAMFlow = new PromisifiedAMFlowProxy((new MockAmflow()));
 		let permission;
 
 		await promisifiedAMFlow.authenticate("0")
@@ -71,7 +71,7 @@ describe("PromisifyAMFlow", () => {
 
 	it("Function sendTick ", () => {
 		const mockAmflow = new MockAmflow();
-		const promisifiedAMFlow = promisifyAMFlow(mockAmflow);
+		const promisifiedAMFlow = new PromisifiedAMFlowProxy((mockAmflow));
 
 		const tick: pl.Tick = [1, [[32, 0, "foo", {}]]];
 		promisifiedAMFlow.sendTick(tick);
@@ -81,7 +81,7 @@ describe("PromisifyAMFlow", () => {
 
 	it("Function onTick and offTick ", () => {
 		const mockAmflow = new MockAmflow();
-		const promisifiedAMFlow = promisifyAMFlow(mockAmflow);
+		const promisifiedAMFlow = new PromisifiedAMFlowProxy((mockAmflow));
 
 		const tickHandler = (_tick: pl.Tick): void => {};
 		promisifiedAMFlow.onTick(tickHandler);
@@ -94,7 +94,7 @@ describe("PromisifyAMFlow", () => {
 
 	it("Function sendEvent", () => {
 		const mockAmflow = new MockAmflow();
-		const promisifiedAMFlow = promisifyAMFlow(mockAmflow);
+		const promisifiedAMFlow = new PromisifiedAMFlowProxy((mockAmflow));
 
 		const event: pl.Event = [32, 0, "zoo", { some: "data" }];
 		promisifiedAMFlow.sendEvent(event);
@@ -104,7 +104,7 @@ describe("PromisifyAMFlow", () => {
 
 	it("Function onEvent and offEvent ", () => {
 		const mockAmflow = new MockAmflow();
-		const promisifiedAMFlow = promisifyAMFlow(mockAmflow);
+		const promisifiedAMFlow = new PromisifiedAMFlowProxy((mockAmflow));
 
 		const eventHandler = (_event: pl.Event): void => {}
 		promisifiedAMFlow.onEvent(eventHandler);
@@ -117,7 +117,7 @@ describe("PromisifyAMFlow", () => {
 
 	it("Function getTickList ", async () => {
 		const mockAmflow = new MockAmflow();
-		const promisifiedAMFlow = promisifyAMFlow(mockAmflow);
+		const promisifiedAMFlow = new PromisifiedAMFlowProxy((mockAmflow));
 
 		let result;
 		const opts = {begin: 0, end: 10};
@@ -134,7 +134,7 @@ describe("PromisifyAMFlow", () => {
 
 	it("Function getTickList (deprecated)", async () => {
 		const mockAmflow = new MockAmflow();
-		const promisifiedAMFlow = promisifyAMFlow(mockAmflow);
+		const promisifiedAMFlow = new PromisifiedAMFlowProxy((mockAmflow));
 
 		let result;
 		await promisifiedAMFlow.getTickList(0, 10)
@@ -150,7 +150,7 @@ describe("PromisifyAMFlow", () => {
 
 	it("Function putStartPoint ", async () => {
 		const mockAmflow = new MockAmflow();
-		const promisifiedAMFlow = promisifyAMFlow(mockAmflow);
+		const promisifiedAMFlow = new PromisifiedAMFlowProxy((mockAmflow));
 		let cnt = 0;
 		const calledFunc = (): void => void cnt++;
 
@@ -170,7 +170,7 @@ describe("PromisifyAMFlow", () => {
 
 	it("Function getStartPoint ", async () => {
 		const mockAmflow = new MockAmflow();
-		const promisifiedAMFlow = promisifyAMFlow(mockAmflow);
+		const promisifiedAMFlow = new PromisifiedAMFlowProxy((mockAmflow));
 
 		let result;
 		await promisifiedAMFlow.getStartPoint({frame: 0})
@@ -187,7 +187,7 @@ describe("PromisifyAMFlow", () => {
 
 	it("Function putStorageData ", async () => {
 		const mockAmflow = new MockAmflow();
-		const promisifiedAMFlow = promisifyAMFlow(mockAmflow);
+		const promisifiedAMFlow = new PromisifiedAMFlowProxy((mockAmflow));
 		let cnt = 0;
 		const calledFunc = () => cnt++;
 
@@ -209,7 +209,7 @@ describe("PromisifyAMFlow", () => {
 
 	it("Function getStorageData ", async () => {
 		const mockAmflow = new MockAmflow();
-		const promisifiedAMFlow = promisifyAMFlow(mockAmflow);
+		const promisifiedAMFlow = new PromisifiedAMFlowProxy((mockAmflow));
 
 		let result;
 		const key = { region: 0, regionKey: "test" };

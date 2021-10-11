@@ -16,9 +16,7 @@ export class MockAmflow implements AMFlow {
 	onTickHandlers: ((tick: pl.Tick) => void)[] = [];
 	onEventHandlers: ((event: pl.Event) => void)[] = [];
 
-	constructor() {
-		// this.logs = [];
-	}
+	constructor() {}
 
 	open(playId: string, callback?: (error: Error | null) => void): void {
 		if (!callback) return;
