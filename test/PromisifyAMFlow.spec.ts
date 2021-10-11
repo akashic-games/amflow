@@ -1,6 +1,6 @@
+import * as pl from "@akashic/playlog";
 import { PromisifiedAMFlowProxy } from "../src/auxiliary/PromisifiedAMFlowProxy";
 import { MockAmflow} from "./helpers/src/MockAMFlow";
-import * as pl from "@akashic/playlog";
 
 describe("PromisifyAMFlow", () => {
 	it("promisifyAMFlow", () => {
