@@ -25,7 +25,7 @@
   "author": "DWANGO Co., Ltd.",
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^16.11.43",
+    "@types/node": "^16.11.45",
     "remark-cli": "~11.0.0",
     "remark-lint": "~9.1.1",
     "rimraf": "^3.0.2",
