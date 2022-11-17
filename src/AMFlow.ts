@@ -1,6 +1,6 @@
-import * as playlog from "@akashic/playlog";
-import {StartPoint} from "./StartPoint";
-import {Permission} from "./Permission";
+import type * as playlog from "@akashic/playlog";
+import type { Permission } from "./Permission";
+import type { StartPoint } from "./StartPoint";
 
 /**
  * AMFlow#getStartPoint() のオプション。
