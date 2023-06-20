@@ -1,6 +1,6 @@
 {
   "name": "@akashic/amflow",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "description": "The interface definition of AMFlow, a playlog communication interface",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
