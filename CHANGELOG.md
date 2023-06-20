@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 4.0.0
+* playlog@3.2.0 に対応
+
 ## 3.1.0
 * `GetTickListExcludeEventFlags` を export
 
