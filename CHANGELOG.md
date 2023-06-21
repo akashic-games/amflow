@@ -1,7 +1,8 @@
 # CHANGELOG
 
-## 4.0.0
+## 3.2.0
 * playlog@3.2.0 に対応
+※ v4.0.0にも同様の内容がpublishされていますが、そちらは利用しないようお願いします。
 
 ## 3.1.0
 * `GetTickListExcludeEventFlags` を export
