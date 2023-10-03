@@ -1,6 +1,6 @@
 {
   "name": "@akashic/amflow",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "The interface definition of AMFlow, a playlog communication interface",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -41,7 +41,7 @@
     "typescript": "^4.9.3"
   },
   "dependencies": {
-    "@akashic/playlog": "~3.2.0"
+    "@akashic/playlog": "~3.3.0"
   },
   "publishConfig": {
     "@akashic:registry": "https://registry.npmjs.org/"
