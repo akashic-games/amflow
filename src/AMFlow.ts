@@ -8,7 +8,7 @@ import type { StartPoint } from "./StartPoint";
 export interface GetStartPointOptions {
 	/**
 	 * フレーム。
-	 * 指定された場合、この値よりも小さい内で最大の `frame` を持つ開始地点情報を取得する。
+	 * 指定された場合、この値以下で最大の `frame` を持つ開始地点情報を取得する。
 	 * `timestamp` と同時に指定された場合、動作は不定である。
 	 */
 	frame?: number;
