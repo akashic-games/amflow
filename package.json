@@ -25,7 +25,7 @@
   "author": "DWANGO Co., Ltd.",
   "license": "MIT",
   "devDependencies": {
-    "@akashic/eslint-config": "^2.0.0",
+    "@akashic/eslint-config": "^3.0.0",
     "@types/node": "^20.0.0",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "eslint": "^8.54.0",
