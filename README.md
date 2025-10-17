@@ -169,15 +169,18 @@ putStartPoint(startPoint: StartPoint, callback: (error: Error) => void): void;
 
 開始地点情報を取得します。このメソッドの呼び出しにはセッションの開始が必須です。
 
-オプションとしてフレーム番号を指定しない場合は、0フレーム目に該当する開始地点情報を取得します。
+オプションとしてフレーム番号を指定した場合は、そのフレーム番号以前の直近のフレームに該当する開始地点情報を取得します。
 
-オプションとしてフレーム番号を指定した場合は、フレーム番号以前の直近のフレームに該当する開始地点情報を取得します。
+オプションとしてタイムスタンプを指定した場合は、その値より小さい中で直近のタイムスタンプを持つ開始地点情報を取得します。
+
+どちらも指定しない場合は、0フレーム目に該当する開始地点情報を取得します。
 
 ```
-getStartPoint(opts: {frame?: number}, callback: (error: Error, startPoint: StartPoint) => void): void;
+getStartPoint(opts: {frame?: number, timestamp?: number}, callback: (error: Error, startPoint: StartPoint) => void): void;
 ```
 
-開始地点情報が見つからない場合、 `StartPoint` は `null` となります。
+条件に当てはまる開始地点情報が一つもない場合、当てはまる開始地点情報が保存されるまでコールバック関数は呼び出されません。
+0フレーム目よりも過去にあたる開始地点情報が要求された場合、コールバック関数にエラーが渡されます。
 
 ### putStorageData
 
