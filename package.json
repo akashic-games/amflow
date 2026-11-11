@@ -37,7 +37,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@akashic/playlog": "~3.3.0"
+    "@akashic/playlog": "~3.4.0"
   },
   "publishConfig": {
     "@akashic:registry": "https://registry.npmjs.org/"
